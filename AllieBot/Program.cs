@@ -43,17 +43,17 @@ public class Program
 
         var dotaPlayerCommand = new Discord.SlashCommandBuilder()
             .WithName("dota-player-info")
-            .WithDescription("Lists player info given SteamID3/Dota Buff ID")
-            .AddOption("SteamID3", ApplicationCommandOptionType.Number, "The SteamID3/Dota Buff ID of the user you want to pull information on", isRequired: true);
+            .WithDescription("Lists player info given SteamID3 or Dota Buff ID")
+            .AddOption("user", ApplicationCommandOptionType.Number, "The SteamID3 or Dota Buff ID of the user you want to pull information on", isRequired: true);
 
         var steamProfileCommand = new Discord.SlashCommandBuilder()
             .WithName("find-steam-user")
             .WithDescription("Lists the passed steam user given steam id")
-            .AddOption("SteamID", ApplicationCommandOptionType.Number, "The SteamId of the steam user you want to pull information on", isRequired: true);
+            .AddOption("user", ApplicationCommandOptionType.Number, "The SteamId of the steam user you want to pull information on", isRequired: true);
 
         //build discord commands
         try
-        {
+        {            
             await _client.Rest.CreateGuildCommand(steamProfileCommand.Build(), guildId);
             await _client.Rest.CreateGuildCommand(guildCommand.Build(), guildId);
             await _client.Rest.CreateGuildCommand(dotaPlayerCommand.Build(), guildId);
