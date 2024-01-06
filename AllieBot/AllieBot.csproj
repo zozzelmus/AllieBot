@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.13.0" />
+    <PackageReference Include="python" Version="3.12.1" />
+    <PackageReference Include="pythonnet" Version="3.0.3" />
   </ItemGroup>
 
 </Project>

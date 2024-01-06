@@ -1,4 +1,4 @@
-﻿namespace AllieBot.Provider
+﻿namespace AllieBot.Providers
 {
     public class SlashCommandProvider
     {

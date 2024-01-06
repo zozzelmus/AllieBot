@@ -1,7 +1,4 @@
-﻿using AllieBot.Models;
-using AllieBot.Provider;
-using Newtonsoft.Json;
-using System.Net;
+﻿using System.Net;
 
 namespace AllieBot.Services
 {

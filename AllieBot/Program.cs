@@ -3,6 +3,8 @@ using Discord;
 using Discord.Net;
 using Discord.WebSocket;
 using Newtonsoft.Json;
+using AllieBot.Providers;
+using AllieBot.Services;
 
 public class Program
 {
@@ -31,22 +33,30 @@ public class Program
 
 	public async Task InitClient()
 	{
+        //TODO: MAKE THIS BETTER
         ulong guildId = 531954312885305344;
 
         var guildCommand = new Discord.SlashCommandBuilder()
             .WithName("list-roles")
-            .WithDescription("Lists all roles of a user.")
+            .WithDescription("Lists all roles of a user")
             .AddOption("user", ApplicationCommandOptionType.User, "The users whos roles you want to be listed", isRequired: true);
 
         var dotaPlayerCommand = new Discord.SlashCommandBuilder()
             .WithName("dota-player-info")
-            .WithDescription("Lists player info given id.")
-            .AddOption("user", ApplicationCommandOptionType.Number, "The ID of the user you want to pull information on", isRequired: true);
+            .WithDescription("Lists player info given SteamID3/Dota Buff ID")
+            .AddOption("SteamID3", ApplicationCommandOptionType.Number, "The SteamID3/Dota Buff ID of the user you want to pull information on", isRequired: true);
 
+        var steamProfileCommand = new Discord.SlashCommandBuilder()
+            .WithName("find-steam-user")
+            .WithDescription("Lists the passed steam user given steam id")
+            .AddOption("SteamID", ApplicationCommandOptionType.Number, "The SteamId of the steam user you want to pull information on", isRequired: true);
+
+        //build discord commands
         try
         {
-            await _client.Rest.CreateGuildCommand(dotaPlayerCommand.Build(), guildId);
+            await _client.Rest.CreateGuildCommand(steamProfileCommand.Build(), guildId);
             await _client.Rest.CreateGuildCommand(guildCommand.Build(), guildId);
+            await _client.Rest.CreateGuildCommand(dotaPlayerCommand.Build(), guildId);
         }
         catch (HttpException exception)
         {
@@ -57,7 +67,7 @@ public class Program
 
     private async Task SlashCommandHandler(SocketSlashCommand command)
     {
-        var _slashCommands = new SlashCommands(new AllieBot.Services.SlashCommandService(), new AllieBot.Provider.SlashCommandProvider());
+        var _slashCommands = new SlashCommands(new SlashCommandService(), new SlashCommandProvider(), new PythonProvider());
         
         // Let's add a switch statement for the command name so we can handle multiple commands in one event.
         switch (command.Data.Name)
@@ -67,6 +77,9 @@ public class Program
                 break;
             case "dota-player-info":
                 await _slashCommands.ListDota2PlayerInfo(command);
+                break;
+            case "find-steam-user":
+                await _slashCommands.GetSteamUserGeneralInfo(command);
                 break;
         }
     }

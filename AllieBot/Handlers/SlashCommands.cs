@@ -3,7 +3,7 @@ using Discord;
 using AllieBot.Services;
 using Newtonsoft.Json;
 using AllieBot.Models;
-using AllieBot.Provider;
+using AllieBot.Providers;
 
 namespace AllieBot.Handlers
 {
@@ -11,11 +11,13 @@ namespace AllieBot.Handlers
     {
         private SlashCommandService _slashCommandService;
         private SlashCommandProvider _slashCommandProvider;
+        private PythonProvider _pythonProvider;
 
-        public SlashCommands(SlashCommandService slashCommandService, SlashCommandProvider slashCommandProvider) 
+        public SlashCommands(SlashCommandService slashCommandService, SlashCommandProvider slashCommandProvider, PythonProvider pythonProvider) 
         {
             _slashCommandService = slashCommandService;
             _slashCommandProvider = slashCommandProvider;
+            _pythonProvider = pythonProvider;
     }
         
         //RETURNS THE LIST OF ROLES IN WHICH THE USER HAS
@@ -65,6 +67,28 @@ namespace AllieBot.Handlers
 
             //create embed and send to channel
             await command.RespondAsync(embed: embedBuilder.Build());
+        }
+
+        //RETURNS STEAM USER INFO FROM STEAM ID
+        public async Task GetSteamUserGeneralInfo(SocketSlashCommand command)
+        {
+            //hit python script provider to scrape steam info
+            var steamId = command.Data.Options.First().Value.ToString();
+
+            string user = _pythonProvider.RunScript(steamId);
+
+            await command.RespondAsync(text: user);
+
+            //build embed
+            //var embedBuilder = new EmbedBuilder()
+            //    .WithAuthor(dotaPlayer.userName)
+            //    .WithTitle("Info")
+            //    .WithDescription(_slashCommandProvider.ParseRank(dotaPlayer.rank))
+            //    .WithColor(Color.Red)
+            //    .WithCurrentTimestamp();
+
+            //create embed and send to channel
+            //await command.RespondAsync(embed: embedBuilder.Build());
         }
 
     }
