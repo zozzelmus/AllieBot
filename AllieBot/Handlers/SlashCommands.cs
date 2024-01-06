@@ -75,9 +75,9 @@ namespace AllieBot.Handlers
             //hit python script provider to scrape steam info
             var steamId = command.Data.Options.First().Value.ToString();
 
-            string user = _pythonProvider.RunScript(steamId);
+            Task<string> user = _pythonProvider.RunScript(steamId);
 
-            await command.RespondAsync(text: user);
+            await command.RespondAsync(text: user.Result);
 
             //build embed
             //var embedBuilder = new EmbedBuilder()

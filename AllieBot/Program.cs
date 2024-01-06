@@ -5,6 +5,7 @@ using Discord.WebSocket;
 using Newtonsoft.Json;
 using AllieBot.Providers;
 using AllieBot.Services;
+using Python.Runtime;
 
 public class Program
 {
