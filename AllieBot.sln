@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllieBot", "AllieBot\AllieBot.csproj", "{61369C18-133C-4FF6-ACA0-C5A56794C3BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{61369C18-133C-4FF6-ACA0-C5A56794C3BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61369C18-133C-4FF6-ACA0-C5A56794C3BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61369C18-133C-4FF6-ACA0-C5A56794C3BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61369C18-133C-4FF6-ACA0-C5A56794C3BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C12DC632-A15C-4741-A9D1-614B61F1B35B}
+	EndGlobalSection
+EndGlobal
