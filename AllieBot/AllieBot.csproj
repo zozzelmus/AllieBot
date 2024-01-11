@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -8,8 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.13.0" />
-    <PackageReference Include="python" Version="3.12.1" />
-    <PackageReference Include="pythonnet" Version="3.0.3" />
+    <PackageReference Include="IronPython" Version="3.4.1" />
   </ItemGroup>
 
 </Project>

@@ -4,20 +4,21 @@ using AllieBot.Services;
 using Newtonsoft.Json;
 using AllieBot.Models;
 using AllieBot.Providers;
+using System.Data;
 
 namespace AllieBot.Handlers
 {
-    public class SlashCommands
+    public class SlashCommandController
     {
         private SlashCommandService _slashCommandService;
         private SlashCommandProvider _slashCommandProvider;
-        private PythonProvider _pythonProvider;
+        private PythonService _pythonProvider;
 
-        public SlashCommands(SlashCommandService slashCommandService, SlashCommandProvider slashCommandProvider, PythonProvider pythonProvider) 
+        public SlashCommandController() 
         {
-            _slashCommandService = slashCommandService;
-            _slashCommandProvider = slashCommandProvider;
-            _pythonProvider = pythonProvider;
+            _slashCommandService = new SlashCommandService();
+            _slashCommandProvider = new SlashCommandProvider();
+            _pythonProvider = new PythonService();
     }
         
         //RETURNS THE LIST OF ROLES IN WHICH THE USER HAS
@@ -72,24 +73,17 @@ namespace AllieBot.Handlers
         //RETURNS STEAM USER INFO FROM STEAM ID
         public async Task GetSteamUserGeneralInfo(SocketSlashCommand command)
         {
-            //hit python script provider to scrape steam info
+            //retrieve parameter from command
             var steamId = command.Data.Options.First().Value.ToString();
 
-            Task<string> user = _pythonProvider.RunScript(steamId);
+            //hit python provider to return 
 
-            await command.RespondAsync(text: user.Result);
+            await command.RespondAsync(text: "COMMAND IS NOT IMPLEMENTED - BLAME HARRIS");
 
-            //build embed
-            //var embedBuilder = new EmbedBuilder()
-            //    .WithAuthor(dotaPlayer.userName)
-            //    .WithTitle("Info")
-            //    .WithDescription(_slashCommandProvider.ParseRank(dotaPlayer.rank))
-            //    .WithColor(Color.Red)
-            //    .WithCurrentTimestamp();
+            //build embed (see example in ListDota2PlayerInfo)
 
-            //create embed and send to channel
-            //await command.RespondAsync(embed: embedBuilder.Build());
+            //create embed and send to channel (see example in ListDota2PlayerInfo)
+
         }
-
     }
 }

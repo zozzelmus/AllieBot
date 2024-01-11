@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using AllieBot.Models;
+using System.Net;
 
 namespace AllieBot.Services
 {

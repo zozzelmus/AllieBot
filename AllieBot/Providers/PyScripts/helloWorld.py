@@ -1,3 +1,2 @@
-
-def hello():
-    return "hello world! greetings to the python implementation"
+y = 20 
+xy = x + y

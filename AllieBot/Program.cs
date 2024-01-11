@@ -5,22 +5,28 @@ using Discord.WebSocket;
 using Newtonsoft.Json;
 using AllieBot.Providers;
 using AllieBot.Services;
-using Python.Runtime;
 
 public class Program
 {
 	private DiscordSocketClient _client;
     private DiscordSocketConfig _discordSocketConfig;
+    public PythonService _pythonProvider;
+    public SlashCommandService _slashCommandService;
+    public SlashCommandProvider _slashCommandProvider;
 
-	static void Main(string[] args) => new Program().MainAsync().GetAwaiter().GetResult();
+    public Program()
+    {
+        _discordSocketConfig = new DiscordSocketConfig { MessageCacheSize = 100 };
+        _client = new DiscordSocketClient(_discordSocketConfig);
+    }
+
+    static void Main(string[] args) => new Program().MainAsync().GetAwaiter().GetResult();
 	
 	public async Task MainAsync()
 	{
         // When working with events that have Cacheable<IMessage, ulong> parameters,
         // you must enable the message cache in your config settings if you plan to
-        // use the cached message entity. 
-        _discordSocketConfig = new DiscordSocketConfig { MessageCacheSize = 100 };
-		_client = new DiscordSocketClient(_discordSocketConfig);
+        // use the cached message entity.
 
 		await _client.LoginAsync(TokenType.Bot, File.ReadAllText("token.txt"));
 		await _client.StartAsync();
@@ -40,7 +46,7 @@ public class Program
         var guildCommand = new Discord.SlashCommandBuilder()
             .WithName("list-roles")
             .WithDescription("Lists all roles of a user")
-            .AddOption("user", ApplicationCommandOptionType.User, "The users whos roles you want to be listed", isRequired: true);
+            .AddOption("user", ApplicationCommandOptionType.User, "The user whos roles you want to be listed", isRequired: true);
 
         var dotaPlayerCommand = new Discord.SlashCommandBuilder()
             .WithName("dota-player-info")
@@ -68,7 +74,7 @@ public class Program
 
     private async Task SlashCommandHandler(SocketSlashCommand command)
     {
-        var _slashCommands = new SlashCommands(new SlashCommandService(), new SlashCommandProvider(), new PythonProvider());
+        var _slashCommands = new SlashCommandController();
         
         // Let's add a switch statement for the command name so we can handle multiple commands in one event.
         switch (command.Data.Name)
