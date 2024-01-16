@@ -49,7 +49,7 @@ namespace AllieBot.Services
         // };
         //Console.WriteLine(RunScriptRaw("final = str(int(x) + int(y))", pyPar, "final"));
 
-        public dynamic RunScriptRaw(string code, List<PythonParamter> vars, string retVarName)
+        public dynamic RunScriptRaw(string code, List<PythonParameter> vars, string retVarName)
         {
             //create scope
             var scope = engine.CreateScope();
@@ -58,7 +58,7 @@ namespace AllieBot.Services
             if (vars.Count > 0)
             {
 
-                foreach (PythonParamter var in vars)
+                foreach (PythonParameter var in vars)
                 {
                     scope.SetVariable(var.Name, var.Value);
                 }
@@ -70,5 +70,35 @@ namespace AllieBot.Services
             //return execution
             return scope.GetVariable<dynamic>(retVarName);
         }
+
+        public dynamic RunScript(string libName, List<PythonParameter> vars, string retVarName)
+        {
+            var scope = engine.CreateScope();
+
+            if (vars.Count > 0)
+            {
+
+                foreach (PythonParameter var in vars)
+                {
+                    scope.SetVariable(var.Name, var.Value);
+                }
+            }
+
+            var script = pylibs.Where(x => x.Name == libName).FirstOrDefault();
+
+            if (script is null)
+                throw new NullReferenceException("Could not find lib");
+            try
+            {
+                script.Code.Execute(scope);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return scope.GetVariable<dynamic>(retVarName);
+        }
+
     }
 }

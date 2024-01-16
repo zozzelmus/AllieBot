@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using AllieBot.Models;
 using AllieBot.Providers;
 using System.Data;
+using IronPython.Compiler.Ast;
 
 namespace AllieBot.Handlers
 {
@@ -12,13 +13,13 @@ namespace AllieBot.Handlers
     {
         private SlashCommandService _slashCommandService;
         private SlashCommandProvider _slashCommandProvider;
-        private PythonService _pythonProvider;
+        private PythonService _pythonService;
 
         public SlashCommandController() 
         {
             _slashCommandService = new SlashCommandService();
             _slashCommandProvider = new SlashCommandProvider();
-            _pythonProvider = new PythonService();
+            _pythonService = new PythonService();
     }
         
         //RETURNS THE LIST OF ROLES IN WHICH THE USER HAS
@@ -76,9 +77,12 @@ namespace AllieBot.Handlers
             //retrieve parameter from command
             var steamId = command.Data.Options.First().Value.ToString();
 
-            //hit python provider to return 
+            //hit python service to return
+            List<PythonParameter> pyVars = new List<PythonParameter>();
+            pyVars.Add(new PythonParameter("give_url", $"https://steamcommunity.com/profiles/{steamId}"));
+            var ret = _pythonService.RunScript("steam", pyVars, "retVal");
 
-            await command.RespondAsync(text: "COMMAND IS NOT IMPLEMENTED - BLAME HARRIS");
+            await command.RespondAsync(text: (string)ret);
 
             //build embed (see example in ListDota2PlayerInfo)
 
