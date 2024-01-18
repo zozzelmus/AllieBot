@@ -1,17 +1,17 @@
 ﻿namespace AllieBot.Models
 {
-    public class PythonParamter
+    public class PythonParameter
     {
         public string Name { get; set; }
         public dynamic Value { get; set; }
 
-        public PythonParamter()
+        public PythonParameter()
         {
             Name = "";
             Value = "";
         }
 
-        public PythonParamter(string name, dynamic value)
+        public PythonParameter(string name, dynamic value)
         {
             Name = name;
             Value = value;

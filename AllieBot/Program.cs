@@ -56,7 +56,7 @@ public class Program
         var steamProfileCommand = new Discord.SlashCommandBuilder()
             .WithName("find-steam-user")
             .WithDescription("Lists the passed steam user given steam id")
-            .AddOption("user", ApplicationCommandOptionType.Number, "The SteamId of the steam user you want to pull information on", isRequired: true);
+            .AddOption("user", ApplicationCommandOptionType.String, "The SteamId of the steam user you want to pull information on", isRequired: true);
 
         //build discord commands
         try
